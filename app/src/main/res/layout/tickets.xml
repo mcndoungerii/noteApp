@@ -15,7 +15,7 @@
         android:layout_margin="3pt">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
@@ -23,7 +23,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="But, as most designers will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects." />
