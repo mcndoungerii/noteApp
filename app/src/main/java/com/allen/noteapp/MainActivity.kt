@@ -1,7 +1,10 @@
 package com.allen.noteapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -26,6 +29,25 @@ class MainActivity : AppCompatActivity() {
 
         //connecting adapter with the activity layout
         ivNotes.adapter = myNotesAdapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item != null) {
+            when(item.itemId){
+                R.id.addNote -> {
+                    //Go to add Page -- Here we will use intent which facilitates InterProcess Commun` btn activities
+                    var intent = Intent(this,AddNotes::class.java)
+                    startActivity(intent)
+
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     //Displaying listOfNotes to Activity
