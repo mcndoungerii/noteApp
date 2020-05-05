@@ -13,7 +13,8 @@ class AddNotes : AppCompatActivity() {
     }
 
     fun buAdd(view: View){
-        var intent = Intent(this,MainActivity::class.java)
-        startActivity(intent)
+//        var intent = Intent(this,MainActivity::class.java)
+//        startActivity(intent)
+        finish()
     }
 }
