@@ -2,8 +2,11 @@ package com.allen.noteapp
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteQueryBuilder
+import android.text.Selection
 import android.widget.Toast
 
 class DbManager {
@@ -45,4 +48,11 @@ class DbManager {
         return ID
     }
 
+    fun Query(projection:Array<String>,selection: String,selectionArgs: Array<String>,SorOrder:String):Cursor{
+
+        val qb=SQLiteQueryBuilder()
+        qb.tables=dbTable
+        val cursor = qb.query(sqlDB,projection,selection,selectionArgs,null,null,SorOrder)
+        return cursor;
+    }
 }

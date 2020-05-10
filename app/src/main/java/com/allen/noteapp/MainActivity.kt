@@ -28,12 +28,40 @@ class MainActivity : AppCompatActivity() {
         listOfNotes.add(Notes(3,"Dear Student","But, as most students will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects."));
 
 
-        //adding your list of notes to the adapter
-        var myNotesAdapter = MyNotesBaseAdapter(listOfNotes)
 
-        //connecting adapter with the activity layout
-        ivNotes.adapter = myNotesAdapter
+
+        LoadQuery("%")
+
     }
+
+    fun LoadQuery(title:String){
+
+        //Load from the databse
+        var dbManager= DbManager(this)
+        val projections = arrayOf("ID","Title","Description")
+
+        val selectionArgs = arrayOf(title)
+
+        val cursor = dbManager.Query(projections,"Title like ?",selectionArgs,"Title")
+
+        listOfNotes.clear()
+        if(cursor.moveToFirst()){
+
+            do{
+                val ID=cursor.getInt(cursor.getColumnIndex("ID"))
+                val Title=cursor.getString(cursor.getColumnIndex("Title"))
+                val Description=cursor.getString((cursor.getColumnIndex("Description")))
+                listOfNotes.add(Notes(ID,Title,Description))
+
+            }while (cursor.moveToNext())
+            //adding your list of notes to the adapter
+            var myNotesAdapter = MyNotesBaseAdapter(listOfNotes)
+
+            //connecting adapter with the activity layout
+            ivNotes.adapter = myNotesAdapter
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu,menu)
@@ -49,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(applicationContext, query, Toast.LENGTH_LONG).show()
                 //TODO: Search Database
+                LoadQuery("%"+ query + "%")
                 return false
             }
 
