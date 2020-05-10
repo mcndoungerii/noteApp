@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
             }while (cursor.moveToNext())
             //adding your list of notes to the adapter
-            var myNotesAdapter = MyNotesBaseAdapter(listOfNotes)
+            var myNotesAdapter = MyNotesBaseAdapter(this,listOfNotes)
 
             //connecting adapter with the activity layout
             ivNotes.adapter = myNotesAdapter
@@ -105,8 +105,10 @@ class MainActivity : AppCompatActivity() {
     //Displaying listOfNotes to Activity
     inner class MyNotesBaseAdapter:BaseAdapter {
         var listOfNotesAdapter = ArrayList<Notes>()
-        constructor(listOfNotesAdapter: ArrayList<Notes>):super(){
+        var context:Context?=null;
+        constructor(context:Context,listOfNotesAdapter: ArrayList<Notes>):super(){
             this.listOfNotesAdapter = listOfNotesAdapter
+            this.context=context
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -118,6 +120,13 @@ class MainActivity : AppCompatActivity() {
             //connecting the view components with the items in the array
             myView.tvTitle.text = myItem.noteName
             myView.tvDes.text = myItem.noteDes
+            myView.IvDelete.setOnClickListener(View.OnClickListener {
+               var dbManager=DbManager(this.context!!)
+                val selectionArgs = arrayOf(myItem.id.toString())
+                dbManager.Delete("ID=?",selectionArgs)
+                //call loadQuery
+                LoadQuery("%")
+            })
 
             return myView
         }

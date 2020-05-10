@@ -39,7 +39,7 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/IvDelete"
                 android:layout_marginRight="10pt"
                 android:layout_width="40pt"
                 android:layout_height="30pt"
