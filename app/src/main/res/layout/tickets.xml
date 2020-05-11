@@ -47,7 +47,7 @@
                 app:srcCompat="@drawable/baseline_delete_black_18dp" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/IvEdit"
                 android:layout_width="40pt"
                 android:layout_height="30pt"
                 android:layout_weight="1"

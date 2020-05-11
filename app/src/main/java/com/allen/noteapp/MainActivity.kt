@@ -17,15 +17,15 @@ import kotlinx.android.synthetic.main.tickets.view.*
 
 class MainActivity : AppCompatActivity() {
 
-    var listOfNotes = ArrayList<Notes>();
+    var listOfNotes = ArrayList<Note>();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         //add list of notes
-        listOfNotes.add(Notes(1,"Dear Pastor","But, as most pastors will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects."));
-        listOfNotes.add(Notes(2,"Dear Doctor","But, as most doctor will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects."));
-        listOfNotes.add(Notes(3,"Dear Student","But, as most students will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects."));
+        listOfNotes.add(Note(1,"Dear Pastor","But, as most pastors will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects."));
+        listOfNotes.add(Note(2,"Dear Doctor","But, as most doctor will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects."));
+        listOfNotes.add(Note(3,"Dear Student","But, as most students will tell you, creating patterns from scratch can be a time-consuming process, especially if your goal is to create a seamless pattern. Luckily, the web offers plenty of resources to come to your aid and save you time on design projects."));
 
 
 
@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        LoadQuery("%")
+    }
     fun LoadQuery(title:String){
 
         //Load from the databse
@@ -51,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 val ID=cursor.getInt(cursor.getColumnIndex("ID"))
                 val Title=cursor.getString(cursor.getColumnIndex("Title"))
                 val Description=cursor.getString((cursor.getColumnIndex("Description")))
-                listOfNotes.add(Notes(ID,Title,Description))
+                listOfNotes.add(Note(ID,Title,Description))
 
             }while (cursor.moveToNext())
             //adding your list of notes to the adapter
@@ -104,9 +108,9 @@ class MainActivity : AppCompatActivity() {
 
     //Displaying listOfNotes to Activity
     inner class MyNotesBaseAdapter:BaseAdapter {
-        var listOfNotesAdapter = ArrayList<Notes>()
+        var listOfNotesAdapter = ArrayList<Note>()
         var context:Context?=null;
-        constructor(context:Context,listOfNotesAdapter: ArrayList<Notes>):super(){
+        constructor(context:Context,listOfNotesAdapter: ArrayList<Note>):super(){
             this.listOfNotesAdapter = listOfNotesAdapter
             this.context=context
         }
@@ -122,10 +126,13 @@ class MainActivity : AppCompatActivity() {
             myView.tvDes.text = myItem.noteDes
             myView.IvDelete.setOnClickListener(View.OnClickListener {
                var dbManager=DbManager(this.context!!)
-                val selectionArgs = arrayOf(myItem.id.toString())
+                val selectionArgs = arrayOf(myItem.noteID.toString())
                 dbManager.Delete("ID=?",selectionArgs)
                 //call loadQuery
                 LoadQuery("%")
+            })
+            myView.IvEdit.setOnClickListener(View.OnClickListener {
+                GoToUpdate(myItem)
             })
 
             return myView
@@ -142,6 +149,14 @@ class MainActivity : AppCompatActivity() {
         override fun getCount(): Int {
             return listOfNotesAdapter.size
         }
+    }
+
+    fun GoToUpdate(note:Note){
+        var intent = Intent(this,AddNotes::class.java)
+        intent.putExtra("ID",note.noteID)
+        intent.putExtra("Name",note.noteName)
+        intent.putExtra("Des",note.noteDes)
+        startActivity(intent)
     }
 
 

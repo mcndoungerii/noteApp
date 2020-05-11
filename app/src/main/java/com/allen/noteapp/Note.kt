@@ -1,12 +1,12 @@
 package com.allen.noteapp
 
-class Notes {
-    var id:Number ?= null;
+class Note {
+    var noteID:Number ?= null;
     var noteName:String ?= null;
     var noteDes:String ?= null;
 
-    constructor(id:Number, noteName:String, noteDes:String){
-        this.id = id;
+    constructor(noteID:Number, noteName:String, noteDes:String){
+        this.noteID = noteID;
         this.noteName = noteName;
         this.noteDes = noteDes;
     }
