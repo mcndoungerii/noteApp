@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+        Toast.makeText(this,"onCreate",Toast.LENGTH_LONG).show()
         LoadQuery("%")
 
     }
@@ -37,7 +38,30 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         LoadQuery("%")
+        Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show()
     }
+
+    override fun onStart() {
+        super.onStart()
+        Toast.makeText(this,"onStart",Toast.LENGTH_LONG).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Toast.makeText(this,"onPause",Toast.LENGTH_LONG).show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Toast.makeText(this,"onStop",Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(this,"onDestroy",Toast.LENGTH_LONG).show()
+    }
+
+
     fun LoadQuery(title:String){
 
         //Load from the databse
